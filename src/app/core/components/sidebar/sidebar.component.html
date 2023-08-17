@@ -1,0 +1,87 @@
+<div
+  class="sidebar-menu"
+  [@onSideNavChange]="sidebarService.sidebarStatus | async"
+>
+  <mat-nav-list class="menu-list">
+    <div class="flex-nav-list">
+      <div class="top-nav">
+        <a
+          mat-list-item
+          routerLinkActive="active-list-item"
+          routerLink="dashboard"
+          title="Dashboard"
+          (click)="openSidebar()"
+        >
+          <mat-icon
+            class="icon"
+            [@iconAnimation]="sidebarService.sidebarStatus | async"
+            >dashboard</mat-icon
+          >
+          <span
+            class="label"
+            [@labelAnimation]="sidebarService.sidebarStatus | async"
+            >Dashboard</span
+          >
+        </a>
+        <a
+          mat-list-item
+          routerLinkActive="active-list-item"
+          routerLink="work"
+          title="Work"
+          (click)="openSidebar()"
+        >
+          <mat-icon
+            class="icon"
+            [@iconAnimation]="sidebarService.sidebarStatus | async"
+            >work</mat-icon
+          >
+          <span
+            class="label"
+            [@labelAnimation]="sidebarService.sidebarStatus | async"
+            >Work</span
+          >
+        </a>
+        <a
+          mat-list-item
+          routerLinkActive="active-list-item"
+          routerLink="feedback"
+          title="Feedback"
+          (click)="openSidebar()"
+        >
+          <mat-icon
+            class="icon"
+            [@iconAnimation]="sidebarService.sidebarStatus | async"
+            >feedback</mat-icon
+          >
+          <span
+            class="label"
+            [@labelAnimation]="sidebarService.sidebarStatus | async"
+            >Feedback</span
+          >
+        </a>
+      </div>
+
+      <mat-divider></mat-divider>
+      <div class="bottom-nav">
+        <a
+          mat-list-item
+          routerLinkActive="active-list-item"
+          routerLink="login"
+          title="Login"
+          (click)="openSidebar()"
+        >
+          <mat-icon
+            class="icon"
+            [@iconAnimation]="sidebarService.sidebarStatus | async"
+            >input</mat-icon
+          >
+          <span
+            class="label"
+            [@labelAnimation]="sidebarService.sidebarStatus | async"
+            >Login</span
+          >
+        </a>
+      </div>
+    </div>
+  </mat-nav-list>
+</div>

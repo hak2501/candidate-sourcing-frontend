@@ -1,0 +1,17 @@
+@import "../variables.scss";
+
+.left-nav{
+    min-width: 60px;
+    background: $accent-gradient;
+}
+
+.navbar-container-height{
+    height: calc(100% - var(--mat-toolbar-mobile-height));
+} 
+
+@media (min-width: 599px){
+    .navbar-container-height{
+        height: calc(100% - var(--mat-toolbar-standard-height));
+    }
+    
+}
