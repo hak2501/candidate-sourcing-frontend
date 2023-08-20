@@ -8,6 +8,7 @@ import {
   of,
   catchError,
   throwError,
+  switchMap,
 } from 'rxjs';
 import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
@@ -24,7 +25,6 @@ const AUTH_API = 'http://localhost:8080/api/auth/';
 })
 export class AuthService {
   private subject = new BehaviorSubject<User | null>(null);
-  private loggedInSubject = new BehaviorSubject<boolean>(false);
   private accessSubject = new BehaviorSubject<string>('');
   private refreshSubject = new BehaviorSubject<string>('');
 
@@ -47,9 +47,6 @@ export class AuthService {
       const { accessToken, refreshToken } = JSON.parse(authData);
       this.updateToken({ accessToken, refreshToken });
       this.router.navigateByUrl('/dashboard');
-      this.isLoggedIn$.subscribe((res) => {
-        this.loggedInSubject.next(res);
-      });
     }
   }
 
@@ -75,13 +72,17 @@ export class AuthService {
   }
 
   public refresh() {
-    return this.http.post<baseResponse<JWT>>(AUTH_API + 'refresh', {}).pipe(
-      tap((response) => {
-        this.updateToken(response.payload);
-        localStorage.setItem(AUTH_DATA, JSON.stringify(response.payload));
-      }),
-      shareReplay()
-    );
+    return this.http
+      .post<baseResponse<JWT>>(AUTH_API + 'refresh', {
+        refreshToken: this.getRefreshToken(),
+      })
+      .pipe(
+        tap((response) => {
+          this.updateToken(response.payload);
+          localStorage.setItem(AUTH_DATA, JSON.stringify(response.payload));
+        }),
+        shareReplay()
+      );
   }
 
   public logout() {
@@ -112,10 +113,6 @@ export class AuthService {
 
   public getRefreshToken() {
     return this.refreshSubject.value;
-  }
-
-  public isLoggedIn() {
-    return this.loggedInSubject.value;
   }
 
   private updateToken(authData: JWT): User {

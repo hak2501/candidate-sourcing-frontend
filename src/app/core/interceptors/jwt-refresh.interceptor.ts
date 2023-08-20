@@ -12,6 +12,7 @@ import {
   catchError,
   switchMap,
   throwError,
+  filter,
 } from 'rxjs';
 
 @Injectable()
@@ -44,22 +45,26 @@ export class JwtRefreshInterceptor {
   private handle401Error(req: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRefreshing$.value) {
       this.isRefreshing$.next(true);
-      if (this.authService.isLoggedIn()) {
-        return this.authService.refresh().pipe(
-          switchMap(() => {
-            this.isRefreshing$.next(false);
-            return next.handle(req);
-          }),
-          catchError((err) => {
-            this.isRefreshing$.next(false);
-            if (err.status == '403') {
-              this.authService.logout();
-            }
-            return throwError(() => err);
-          })
-        );
-      }
+      return this.authService.refresh().pipe(
+        switchMap(() => {
+          this.isRefreshing$.next(false);
+          return next.handle(req);
+        }),
+        catchError((err) => {
+          this.isRefreshing$.next(false);
+          if (err.status == '403') {
+            this.authService.logout();
+          }
+          return throwError(() => err);
+        })
+      );
+    } else {
+      return this.isRefreshing$.pipe(
+        filter((val) => !val),
+        switchMap(() => {
+          return next.handle(req);
+        })
+      );
     }
-    return next.handle(req);
   }
 }
