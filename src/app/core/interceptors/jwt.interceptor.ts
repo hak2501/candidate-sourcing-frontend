@@ -12,7 +12,6 @@ export class JwtInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const token = this.authService.getAccessToken();
-    console.log('here is token', token, request);
     const ignoredUrls: string[] = [];
     if (token && !ignoredUrls.includes(request.url)) {
       request = request.clone({
