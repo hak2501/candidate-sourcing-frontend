@@ -11,6 +11,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import {
+  ErrorStateMatcher,
+  ShowOnDirtyErrorStateMatcher,
+} from '@angular/material/core';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { JwtRefreshInterceptor } from './core/interceptors/jwt-refresh.interceptor';
 
 const MODULES = [CoreModule, DashboardModule];
 const MAT_MODULES = [
@@ -26,10 +33,19 @@ const MAT_MODULES = [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     ...MAT_MODULES,
     ...MODULES,
   ],
-  providers: [],
+  providers: [
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtRefreshInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

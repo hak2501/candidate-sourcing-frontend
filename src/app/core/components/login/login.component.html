@@ -1,0 +1,148 @@
+<div class="login-container">
+  <div class="container" [ngClass]="{ 'right-panel-active': activePanel }">
+    <!-- Sign Up -->
+    <div class="container__form container--signup">
+      <form [formGroup]="form" class="form" id="form1">
+        <h2 class="form__title">Sign Up</h2>
+
+        <mat-form-field
+          [hideRequiredMarker]="hideRequiredControl.value"
+          [floatLabel]="'always'"
+          appearance="fill"
+          class="login-input"
+        >
+          <mat-label translate>Username</mat-label>
+          <input
+            autofocus
+            matInput
+            placeholder="Username"
+            formControlName="username"
+          />
+          <mat-error *ngIf="username?.hasError('required')"
+            >Required Field</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field
+          [hideRequiredMarker]="hideRequiredControl.value"
+          [floatLabel]="'always'"
+          appearance="fill"
+          class="login-input"
+        >
+          <mat-label translate>Email</mat-label>
+          <input
+            matInput
+            placeholder="Email"
+            type="email"
+            formControlName="email"
+          />
+          <mat-error
+            *ngIf="email?.hasError('email') && !email?.hasError('required')"
+          >
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="email?.hasError('required')"
+            >Required Field</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field
+          [hideRequiredMarker]="hideRequiredControl.value"
+          [floatLabel]="'always'"
+          appearance="fill"
+          class="login-input"
+        >
+          <mat-label translate>Password</mat-label>
+          <input
+            matInput
+            placeholder="Password"
+            [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password"
+          />
+          <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+          <mat-error *ngIf="password?.hasError('required')"
+            >Required Field</mat-error
+          >
+        </mat-form-field>
+        <button class="btn" (click)="register()">Sign Up</button>
+      </form>
+    </div>
+
+    <!-- Sign In -->
+    <div class="container__form container--signin">
+      <form [formGroup]="form" class="form" id="form2">
+        <h2 class="form__title">Sign In</h2>
+        <mat-form-field
+          [hideRequiredMarker]="hideRequiredControl.value"
+          [floatLabel]="'always'"
+          appearance="fill"
+          class="login-input"
+        >
+          <mat-label translate>Email</mat-label>
+          <input
+            autofocus
+            matInput
+            placeholder="Email"
+            type="email"
+            formControlName="email"
+          />
+          <mat-error
+            *ngIf="
+              email?.hasError('email') &&
+              !email?.hasError('required') &&
+              (email?.dirty || email?.touched)
+            "
+          >
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="email?.hasError('required')"
+            >Required Field</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field
+          [hideRequiredMarker]="hideRequiredControl.value"
+          [floatLabel]="'always'"
+          appearance="fill"
+          class="login-input"
+        >
+          <mat-label translate>Password</mat-label>
+          <input
+            matInput
+            placeholder="Password"
+            [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password"
+          />
+          <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+
+          <mat-error *ngIf="password?.hasError('required')"
+            >Required Field</mat-error
+          >
+        </mat-form-field>
+        <a href="#" class="link">Forgot your password?</a>
+        <button class="btn" (click)="login()">Sign In</button>
+      </form>
+    </div>
+
+    <!-- Overlay -->
+    <div class="container__overlay">
+      <div class="overlay">
+        <div class="overlay__panel overlay--left">
+          <button class="btn" id="signIn" (click)="toggleScreen()">
+            Sign In
+          </button>
+        </div>
+        <div class="overlay__panel overlay--right">
+          <button class="btn" id="signUp" (click)="toggleScreen()">
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="display: none">
+  Credits to :: https://codepen.io/danielarlert/pen/LYNVyPL
+</div>

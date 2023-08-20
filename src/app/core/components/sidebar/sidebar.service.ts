@@ -9,7 +9,7 @@ export type SidebarState = 'open' | 'close';
 export class SidebarService {
   private sidebarState: SidebarState = 'open';
   private subject$ = new BehaviorSubject<SidebarState>('open');
-  public sidebarStatus = this.subject$.asObservable();
+  public sidebarState$ = this.subject$.asObservable();
 
   constructor() {}
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SidebarService } from './core/components/sidebar/sidebar.service';
 import { mainContentAnimation } from './animations';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,8 @@ import { mainContentAnimation } from './animations';
 })
 export class AppComponent {
   title = 'candidate-sourcing-frontend';
-  constructor(public sidebarService: SidebarService) {}
+  constructor(
+    public sidebarService: SidebarService,
+    public authService: AuthService
+  ) {}
 }

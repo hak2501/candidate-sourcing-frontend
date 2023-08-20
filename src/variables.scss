@@ -9,6 +9,8 @@ $primary-palette: map.get($color-config, 'primary');
 $accent-palette: map.get($color-config, 'accent');
 $warn-palette: map.get($color-config, 'warn');
 
+$primary-regular: mat.get-color-from-palette($primary-palette, 500);
+$accent-regular: mat.get-color-from-palette($accent-palette, 500);
 
 $primary-gradient: linear-gradient(110.3deg, mat.get-color-from-palette($primary-palette, 300) 8.7%,mat.get-color-from-palette($primary-palette, 400) 47.5%, mat.get-color-from-palette($primary-palette, 500) 89.1%);
 $accent-gradient: linear-gradient(110.3deg, mat.get-color-from-palette($accent-palette, 900) 8.7%,mat.get-color-from-palette($accent-palette, 800) 47.5%, mat.get-color-from-palette($accent-palette, 300) 89.1%);

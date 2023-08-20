@@ -1,6 +1,43 @@
-@import './theme.scss';
 @import './assets/fonts/fonts.scss';
+@import './variables.scss';
 
-*{ color: white; }
+
+*{font-family: "DMSans";}
 html, body { height: 100%;}
-body { margin: 0; font-family: "NotoSans";}
+body { margin: 0; }
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+:root {
+	/* COLORS */
+	--white: #e9e9e9;
+	--gray: #333;
+	--blue: #0367a6;
+	--lightblue: #008997;
+
+	/* RADII */
+	--button-radius: 0.7rem;
+
+	/* SIZES */
+	--max-width: 758px;
+	--max-height: 420px;
+}
+
+.login-container {
+	align-items: center;
+	background-color: var(--white);
+	background: $accent-gradient;
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: grid;
+	height: 100vh;
+	place-items: center;
+}
+
+.mdc-snackbar {
+    white-space: pre-wrap
+  }

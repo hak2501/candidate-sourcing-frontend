@@ -1,19 +1,26 @@
-<app-navbar></app-navbar>
+<ng-container *ngIf="authService.isLoggedOut$ | async">
+  <router-outlet></router-outlet>
+</ng-container>
 
-<mat-sidenav-container class="navbar-container-height">
-  <mat-sidenav
-    mode="side"
-    opened="true"
-    class="left-nav"
-    autosize
-    fixedTopGap="56"
-  >
-    <app-sidebar></app-sidebar>
-  </mat-sidenav>
+<ng-container *ngIf="authService.isLoggedIn$ | async">
+  <app-navbar></app-navbar>
 
-  <mat-sidenav-content
-    [@onSideNavChange]="sidebarService.sidebarStatus | async"
-  >
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  <mat-sidenav-container class="navbar-container-height">
+    <mat-sidenav
+      mode="side"
+      opened="true"
+      class="left-nav"
+      autosize
+      fixedTopGap="56"
+    >
+      <app-sidebar></app-sidebar>
+    </mat-sidenav>
+
+    <mat-sidenav-content
+      class="background-main"
+      [@onSideNavChange]="sidebarService.sidebarState$ | async"
+    >
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-container>

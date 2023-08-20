@@ -1,6 +1,6 @@
 <div
   class="sidebar-menu"
-  [@onSideNavChange]="sidebarService.sidebarStatus | async"
+  [@onSideNavChange]="sidebarService.sidebarState$ | async"
 >
   <mat-nav-list class="menu-list">
     <div class="flex-nav-list">
@@ -8,18 +8,18 @@
         <a
           mat-list-item
           routerLinkActive="active-list-item"
-          routerLink="dashboard"
+          routerLink="/dashboard"
           title="Dashboard"
           (click)="openSidebar()"
         >
           <mat-icon
             class="icon"
-            [@iconAnimation]="sidebarService.sidebarStatus | async"
+            [@iconAnimation]="sidebarService.sidebarState$ | async"
             >dashboard</mat-icon
           >
           <span
             class="label"
-            [@labelAnimation]="sidebarService.sidebarStatus | async"
+            [@labelAnimation]="sidebarService.sidebarState$ | async"
             >Dashboard</span
           >
         </a>
@@ -32,12 +32,12 @@
         >
           <mat-icon
             class="icon"
-            [@iconAnimation]="sidebarService.sidebarStatus | async"
+            [@iconAnimation]="sidebarService.sidebarState$ | async"
             >work</mat-icon
           >
           <span
             class="label"
-            [@labelAnimation]="sidebarService.sidebarStatus | async"
+            [@labelAnimation]="sidebarService.sidebarState$ | async"
             >Work</span
           >
         </a>
@@ -50,35 +50,35 @@
         >
           <mat-icon
             class="icon"
-            [@iconAnimation]="sidebarService.sidebarStatus | async"
+            [@iconAnimation]="sidebarService.sidebarState$ | async"
             >feedback</mat-icon
           >
           <span
             class="label"
-            [@labelAnimation]="sidebarService.sidebarStatus | async"
+            [@labelAnimation]="sidebarService.sidebarState$ | async"
             >Feedback</span
           >
         </a>
       </div>
 
-      <mat-divider></mat-divider>
       <div class="bottom-nav">
+        <mat-divider></mat-divider>
         <a
           mat-list-item
           routerLinkActive="active-list-item"
-          routerLink="login"
-          title="Login"
+          title="Logout"
           (click)="openSidebar()"
         >
           <mat-icon
             class="icon"
-            [@iconAnimation]="sidebarService.sidebarStatus | async"
+            [@iconAnimation]="sidebarService.sidebarState$ | async"
             >input</mat-icon
           >
           <span
             class="label"
-            [@labelAnimation]="sidebarService.sidebarStatus | async"
-            >Login</span
+            [@labelAnimation]="sidebarService.sidebarState$ | async"
+            (click)="logout()"
+            >Logout</span
           >
         </a>
       </div>
