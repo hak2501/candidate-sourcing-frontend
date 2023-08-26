@@ -1,0 +1,10 @@
+@import '../../../../variables.scss';
+.stats-card-width{
+    width: 90%;
+}
+
+:host ::ng-deep app-stats-card.even-background{
+    .stats-card{
+        background-color: $accent;
+    }
+}

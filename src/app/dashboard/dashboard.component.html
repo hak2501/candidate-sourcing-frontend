@@ -1,7 +1,9 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Dashboard</h1>
+  <h1 class="mat-h1">Welcome {{ (authService.user$ | async)?.username }}</h1>
+  <app-stats-bar></app-stats-bar>
   <mat-grid-list cols="2" rowHeight="350px">
     <mat-grid-tile
+      #dashboardGrid
       *ngFor="let card of cards | async"
       [colspan]="card.cols"
       [rowspan]="card.rows"
@@ -25,7 +27,7 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <div>Card Content Here</div>
+          <div style="height: 250px" [innerHTML]="card.content"></div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

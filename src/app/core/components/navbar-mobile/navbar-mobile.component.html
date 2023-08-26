@@ -1,0 +1,44 @@
+<ul class="bottom-nav">
+  <div
+    class="slider"
+    [ngStyle]="{
+      left: (currentPosition$ | async),
+      transform: 'translateX(-50%)'
+    }"
+  ></div>
+  <li (click)="animate($event, 1)">
+    <a [ngClass]="{ 'active-icon': activeItem == 1 }">
+      <mat-icon>dashboard</mat-icon>
+      <span>profile</span>
+    </a>
+  </li>
+  <li (click)="animate($event, 2)">
+    <a [ngClass]="{ 'active-icon': activeItem == 2 }">
+      <mat-icon>dashboard</mat-icon>
+      <span>home</span>
+    </a>
+  </li>
+  <li (click)="animate($event, 3)">
+    <a [ngClass]="{ 'active-icon': activeItem == 3 }">
+      <mat-icon>dashboard</mat-icon>
+      <span>code</span>
+    </a>
+  </li>
+  <li (click)="animate($event, 4)">
+    <a [ngClass]="{ 'active-icon': activeItem == 4 }">
+      <mat-icon>dashboard</mat-icon>
+      <span>favorite</span>
+    </a>
+  </li>
+  <li (click)="animate($event, 5)">
+    <a [ngClass]="{ 'active-icon': activeItem == 5 }">
+      <mat-icon>dashboard</mat-icon>
+      <span>bag</span>
+    </a>
+  </li>
+</ul>
+
+<!-- Credits to
+<h1>
+    https://codepen.io/zcomex/pen/XWomVbX
+</h1> -->

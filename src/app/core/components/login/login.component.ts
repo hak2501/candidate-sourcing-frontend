@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { MessageService } from '../../services/message.service';
+import { SpinnerService } from '../spinner/spinner.service';
 
 @Component({
   selector: 'app-login',
@@ -39,14 +40,17 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private spinnerService: SpinnerService
   ) {}
 
   login() {
     if (this.form.valid) {
       const val = this.form.value;
-      this.authService
-        .login(val.username, val.password)
+      this.spinnerService
+        .showSpinnerUntilCompleted(
+          this.authService.login(val.username, val.password)
+        )
         .subscribe((res: any) => {
           if (!res.validation?.success) {
             this.messageService.showMessages(['Invalid Credentials'], 'Close');

@@ -1,11 +1,11 @@
 @import "../../../../variables.scss";
 
 .navbar{
-    background: $accent-gradient;
+    background: $primary-gradient;
     padding-left: 5px;
-    color: white;
+    color: $accent;
 }
 
 .menu-icon{
-    color: white;
+    color: $accent;
 }

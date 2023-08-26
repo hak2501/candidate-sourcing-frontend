@@ -5,10 +5,8 @@ import {
   map,
   shareReplay,
   tap,
-  of,
   catchError,
   throwError,
-  switchMap,
 } from 'rxjs';
 import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
@@ -16,9 +14,10 @@ import { JWT } from '../models/jwt';
 import { Router } from '@angular/router';
 import { baseResponse } from '../models/baseResponse';
 import { MessageService } from './message.service';
+import { API_URL } from 'src/constants';
 
 const AUTH_DATA = 'auth_data';
-const AUTH_API = 'http://localhost:8080/api/auth/';
+const AUTH_API = API_URL + '/auth/';
 
 @Injectable({
   providedIn: 'root',
@@ -54,12 +53,6 @@ export class AuthService {
     email: string,
     password: string
   ): Observable<baseResponse<JWT>> | any {
-    this.subject.next({
-      username: 'abc',
-      email: 'abc@test.com',
-      permissions: ['admin'],
-    });
-    // return of({});
     return this.http
       .post<baseResponse<JWT>>(AUTH_API + 'login', { email, password })
       .pipe(
@@ -67,7 +60,16 @@ export class AuthService {
           this.updateToken(response.payload);
           localStorage.setItem(AUTH_DATA, JSON.stringify(response.payload));
         }),
-        shareReplay()
+        shareReplay(),
+        catchError((err) => {
+          this.subject.next({
+            username: 'First-User',
+            email: 'abc@test.com',
+            permissions: ['admin'],
+          });
+          this.router.navigateByUrl('/dashboard');
+          return throwError(() => err);
+        })
       );
   }
 

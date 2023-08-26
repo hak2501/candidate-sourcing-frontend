@@ -7,19 +7,17 @@ export type SidebarState = 'open' | 'close';
   providedIn: 'root',
 })
 export class SidebarService {
-  private sidebarState: SidebarState = 'open';
   private subject$ = new BehaviorSubject<SidebarState>('open');
   public sidebarState$ = this.subject$.asObservable();
 
   constructor() {}
 
   toggle() {
-    this.sidebarState = this.sidebarState == 'open' ? 'close' : 'open';
-    this.subject$.next(this.sidebarState);
+    let state: SidebarState = this.subject$.value == 'open' ? 'close' : 'open';
+    this.subject$.next(state);
   }
 
   open() {
-    this.sidebarState = 'open';
-    this.subject$.next(this.sidebarState);
+    this.subject$.next('open');
   }
 }

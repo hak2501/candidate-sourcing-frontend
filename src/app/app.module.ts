@@ -18,8 +18,10 @@ import {
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { JwtRefreshInterceptor } from './core/interceptors/jwt-refresh.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error-handler.interceptor';
+import { ServicesModule } from './services/services.module';
 
-const MODULES = [CoreModule, DashboardModule];
+const MODULES = [CoreModule, DashboardModule, ServicesModule];
 const MAT_MODULES = [
   MatToolbarModule,
   MatButtonModule,
@@ -43,6 +45,11 @@ const MAT_MODULES = [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtRefreshInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true,
     },
   ],

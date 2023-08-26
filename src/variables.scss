@@ -1,4 +1,5 @@
 @use 'sass:map';
+@use "sass:color";
 @use '@angular/material' as mat;
 @import './theme.scss';
 
@@ -9,8 +10,22 @@ $primary-palette: map.get($color-config, 'primary');
 $accent-palette: map.get($color-config, 'accent');
 $warn-palette: map.get($color-config, 'warn');
 
-$primary-regular: mat.get-color-from-palette($primary-palette, 500);
-$accent-regular: mat.get-color-from-palette($accent-palette, 500);
+$primary: mat.get-color-from-palette($primary-palette, 500);
+$accent: mat.get-color-from-palette($accent-palette, 500);
+$warning: mat.get-color-from-palette($warn-palette, 500);
+
+$primary-transparent: color.change(
+    mat.get-color-from-palette($primary-palette, 500),
+    $alpha: 0.3
+);
+
+$accent-transparent: color.change(
+    mat.get-color-from-palette($accent-palette, 500),
+    $alpha: 0.5
+);
+
+$primary-contrast: mat.get-color-from-palette($primary-palette, A200);
+$accent-contrast: mat.get-color-from-palette($accent-palette, A200);
 
 $primary-gradient: linear-gradient(110.3deg, mat.get-color-from-palette($primary-palette, 300) 8.7%,mat.get-color-from-palette($primary-palette, 400) 47.5%, mat.get-color-from-palette($primary-palette, 500) 89.1%);
 $accent-gradient: linear-gradient(110.3deg, mat.get-color-from-palette($accent-palette, 900) 8.7%,mat.get-color-from-palette($accent-palette, 800) 47.5%, mat.get-color-from-palette($accent-palette, 300) 89.1%);

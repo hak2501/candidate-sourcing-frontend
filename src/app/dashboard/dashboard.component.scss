@@ -1,4 +1,4 @@
-@import '../../../../variables.scss';
+@import '../../variables.scss';
 
 .grid-container {
   margin: 20px;
@@ -11,6 +11,7 @@
   left: 15px;
   right: 15px;
   bottom: 15px;
+  border-radius: 25px;
 }
 
 .more-button {
@@ -25,4 +26,9 @@
 
 * {
     color: black;
+}
+
+.myCanvas{
+    height: 100%;
+    width: 100%;
 }

@@ -1,0 +1,34 @@
+<ng-container *ngIf="!hideGrid">
+  <mat-grid-list cols="{{ cols }}" rowHeight="{{ rowHeight }}">
+    <div style="height: {{ rowHeight }}; border-radius: 25px;">
+      <app-spinner [fullScreen]="false"></app-spinner>
+      <mat-grid-tile
+        #statsGrid
+        *ngFor="
+          let stat of stats | async;
+          let even = even;
+          let odd = odd;
+          let first = first;
+          let last = last
+        "
+        [colspan]="stat.cols"
+        [rowspan]="stat.rows"
+      >
+        <app-stats-card
+          [icon]="stat.icon"
+          [stats$]="stat.data"
+          [color]="stat.color"
+          class="stats-card-width"
+          [ngClass]="{
+            'even-background':
+              (responsiveViewService.isHandset$ | async)
+                ? (responsiveViewService.isMobile$ | async)
+                  ? even
+                  : first || last
+                : even
+          }"
+        ></app-stats-card>
+      </mat-grid-tile>
+    </div>
+  </mat-grid-list>
+</ng-container>

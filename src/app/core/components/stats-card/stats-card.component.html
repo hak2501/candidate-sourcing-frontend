@@ -1,0 +1,30 @@
+<mat-card class="stats-card">
+  <app-spinner [fullScreen]="false"></app-spinner>
+  <mat-card-header></mat-card-header>
+  <mat-card-content>
+    <div class="d-flex stats-flex-align">
+      <div class="m-5 stats-card-height stats-center stats-icon-div">
+        <mat-icon
+          color="{{ color }}"
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="{{ icon }}"
+          class="stats-icon"
+        ></mat-icon>
+      </div>
+      <div class="m-5 stats-card-height stats-content-div">
+        <div *ngFor="let stats of statsList$ | async; let last = last">
+          <mat-card class="text-center round-border">
+            <mat-card-header class="justify-center stat-value">
+              {{ stats.statValue ? stats.statValue : "-" }}
+            </mat-card-header>
+            <mat-card-content class="stat-label">
+              {{ stats.statLabel ? stats.statLabel : "-" }}
+            </mat-card-content>
+          </mat-card>
+          <mat-divider *ngIf="!last" class="m-5"></mat-divider>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,7 +1,9 @@
 <mat-toolbar class="navbar">
-  <button mat-icon-button (click)="toggleSidebar()">
-    <mat-icon class="menu-icon">menu</mat-icon>
-  </button>
+  <ng-container *ngIf="!(responsiveViewService.isHandset$ | async)">
+    <button mat-icon-button (click)="toggleSidebar()">
+      <mat-icon class="menu-icon">menu</mat-icon>
+    </button>
+  </ng-container>
 
   <span class="title">Awesome slider</span>
 </mat-toolbar>

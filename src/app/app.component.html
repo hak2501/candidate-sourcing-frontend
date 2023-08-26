@@ -1,26 +1,33 @@
+<!-- login container -->
 <ng-container *ngIf="authService.isLoggedOut$ | async">
+  <app-spinner></app-spinner>
   <router-outlet></router-outlet>
 </ng-container>
 
 <ng-container *ngIf="authService.isLoggedIn$ | async">
-  <app-navbar></app-navbar>
+  <app-spinner></app-spinner>
 
-  <mat-sidenav-container class="navbar-container-height">
-    <mat-sidenav
-      mode="side"
-      opened="true"
-      class="left-nav"
-      autosize
-      fixedTopGap="56"
-    >
-      <app-sidebar></app-sidebar>
-    </mat-sidenav>
+  <!-- handheld view container -->
+  <ng-container *ngIf="mobileViewSerivce.isHandset$ | async; else webView">
+    <router-outlet></router-outlet>
+    <div style="height: 100px"></div>
+    <app-navbar-mobile style="position: fixed; bottom: 0"></app-navbar-mobile>
+  </ng-container>
 
-    <mat-sidenav-content
-      class="background-main"
-      [@onSideNavChange]="sidebarService.sidebarState$ | async"
-    >
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+  <!-- web view container -->
+  <ng-template #webView>
+    <app-navbar></app-navbar>
+    <mat-sidenav-container class="navbar-container-height">
+      <mat-sidenav mode="side" opened="true" class="left-nav" autosize>
+        <app-sidebar></app-sidebar>
+      </mat-sidenav>
+
+      <mat-sidenav-content
+        class="background-main"
+        [@onSideNavChange]="sidebarService.sidebarState$ | async"
+      >
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </ng-template>
 </ng-container>

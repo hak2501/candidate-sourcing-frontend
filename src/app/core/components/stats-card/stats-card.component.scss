@@ -1,0 +1,39 @@
+@import '../../../../variables.scss';
+.stats-card{
+    border-radius: 25px;
+}
+
+.stats-flex-align{
+    justify-content: space-around;
+}
+
+.stats-card-height{
+    min-height: 120px;
+}
+
+.stat-value{
+    font-size: 25px;
+}
+
+.stat-label{
+    font-size: 15px;
+    color: grey;
+}
+
+.stats-center{
+    display: flex;
+    justify-content: center;
+    place-items: center;
+}
+
+.stats-icon-div{
+    width: 40%;
+}
+
+.stats-content-div{
+    width: 60%;
+}
+
+.stats-icon{
+    transform: scale(3);
+}

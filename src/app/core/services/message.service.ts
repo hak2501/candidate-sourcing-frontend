@@ -13,6 +13,7 @@ export class MessageService {
     });
     this._snackBar.open(message, action, {
       verticalPosition: 'top',
+      panelClass: ['warn-msg'],
     });
   }
 }
