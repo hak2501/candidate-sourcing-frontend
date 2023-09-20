@@ -16,6 +16,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/login/login.component';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SpinnerService } from './components/spinner/spinner.service';
@@ -23,6 +26,11 @@ import { StatsCardComponent } from './components/stats-card/stats-card.component
 import { AuthGuard } from './guards/auth.guard';
 import { ResponsiveViewService } from './services/responsive-view.service';
 import { NavbarMobileComponent } from './components/navbar-mobile/navbar-mobile.component';
+import { ChartComponent } from './components/chart/chart.component';
+import { SassHelperComponent } from './components/sass-helper/sass-helper.component';
+import { DataTableComponent } from './components/data-table/data-table.component';
+import { TableWidgetsComponent } from './components/data-table/table-widgets/table-widgets.component';
+import { TableWidgetsService } from './components/data-table/table-widgets/table-widgets.service';
 
 const MATERIAL_DEPS = [
   MatToolbarModule,
@@ -35,16 +43,25 @@ const MATERIAL_DEPS = [
   MatInputModule,
   MatSnackBarModule,
   MatProgressSpinnerModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+];
+
+const MODULES = [
+  SidebarComponent,
+  NavbarComponent,
+  LoginComponent,
+  SpinnerComponent,
+  StatsCardComponent,
+  NavbarMobileComponent,
+  ChartComponent,
+  SassHelperComponent,
+  DataTableComponent,
+  TableWidgetsComponent,
 ];
 @NgModule({
-  declarations: [
-    SidebarComponent,
-    NavbarComponent,
-    LoginComponent,
-    SpinnerComponent,
-    StatsCardComponent,
-    NavbarMobileComponent,
-  ],
+  declarations: [...MODULES],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
@@ -53,14 +70,13 @@ const MATERIAL_DEPS = [
     ReactiveFormsModule,
     ...MATERIAL_DEPS,
   ],
-  exports: [
-    SidebarComponent,
-    NavbarComponent,
-    LoginComponent,
-    SpinnerComponent,
-    StatsCardComponent,
-    NavbarMobileComponent,
+  exports: [...MATERIAL_DEPS, ...MODULES],
+  providers: [
+    SidebarService,
+    SpinnerService,
+    AuthGuard,
+    ResponsiveViewService,
+    TableWidgetsService,
   ],
-  providers: [SidebarService, SpinnerService, AuthGuard, ResponsiveViewService],
 })
 export class CoreModule {}

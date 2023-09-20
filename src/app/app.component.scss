@@ -1,8 +1,7 @@
-@import '../variables.scss';
 
 .left-nav{
     // min-width: 60px;
-    background: $primary-gradient;
+    background: var(--color-primary);
 }
 
 .navbar-container-height{
@@ -17,5 +16,5 @@
 }
 
 .mat-drawer-container{
-    background-color: #f3f3f3 !important;
+    background-color: --color-off-white !important;
 }

@@ -24,9 +24,80 @@ $accent-transparent: color.change(
     $alpha: 0.5
 );
 
+$warn-transparent: color.change(
+    mat.get-color-from-palette($warn-palette, 500),
+    $alpha: 0.3
+);
+
+
 $primary-contrast: mat.get-color-from-palette($primary-palette, A200);
 $accent-contrast: mat.get-color-from-palette($accent-palette, A200);
 
-$primary-gradient: linear-gradient(110.3deg, mat.get-color-from-palette($primary-palette, 300) 8.7%,mat.get-color-from-palette($primary-palette, 400) 47.5%, mat.get-color-from-palette($primary-palette, 500) 89.1%);
+$primary-gradient: $primary;
+// $primary-gradient: linear-gradient(110.3deg, mat.get-color-from-palette($primary-palette, 300) 8.7%,mat.get-color-from-palette($primary-palette, 400) 47.5%, mat.get-color-from-palette($primary-palette, 500) 89.1%);
 $accent-gradient: linear-gradient(110.3deg, mat.get-color-from-palette($accent-palette, 900) 8.7%,mat.get-color-from-palette($accent-palette, 800) 47.5%, mat.get-color-from-palette($accent-palette, 300) 89.1%);
 $warn-gradient: linear-gradient(110.3deg, mat.get-color-from-palette($warn-palette, 300) 8.7%,mat.get-color-from-palette($warn-palette, 400) 47.5%, mat.get-color-from-palette($warn-palette, 500) 89.1%);
+
+$colors: (
+    primary: mat.get-color-from-palette($primary-palette, 500),
+accent: mat.get-color-from-palette($accent-palette, 500),
+warning: mat.get-color-from-palette($warn-palette, 500),
+
+primary-transparent: color.change(
+    mat.get-color-from-palette($primary-palette, 500),
+    $alpha: 0.3
+),
+
+accent-transparent: color.change(
+    mat.get-color-from-palette($accent-palette, 500),
+    $alpha: 0.5
+),
+
+warn-transparent: color.change(
+    mat.get-color-from-palette($warn-palette, 500),
+    $alpha: 0.3
+),
+
+primary-contrast: mat.get-color-from-palette($primary-palette, A200),
+accent-contrast: mat.get-color-from-palette($accent-palette, A200),
+
+primary-gradient: linear-gradient(110.3deg, mat.get-color-from-palette($primary-palette, 300) 8.7%,mat.get-color-from-palette($primary-palette, 400) 47.5%, mat.get-color-from-palette($primary-palette, 500) 89.1%),
+accent-gradient: linear-gradient(110.3deg, mat.get-color-from-palette($accent-palette, 900) 8.7%,mat.get-color-from-palette($accent-palette, 800) 47.5%, mat.get-color-from-palette($accent-palette, 300) 89.1%),
+warn-gradient: linear-gradient(110.3deg, mat.get-color-from-palette($warn-palette, 300) 8.7%,mat.get-color-from-palette($warn-palette, 400) 47.5%, mat.get-color-from-palette($warn-palette, 500) 89.1%),
+);
+
+:root {
+    --color-primary: #{mat.get-color-from-palette($primary-palette, 500)};
+    --color-accent: #{mat.get-color-from-palette($accent-palette, 500)};
+    --color-warning: #{mat.get-color-from-palette($warn-palette, 500)};
+
+    --color-primary-transparent: #{color.change(
+        mat.get-color-from-palette($primary-palette, 500),
+        $alpha: 0.3)};
+
+    --color-accent-transparent: #{color.change(
+        mat.get-color-from-palette($accent-palette, 500),
+        $alpha: 0.5
+    )};
+
+    --color-warn-transparent: {color.change(
+        mat.get-color-from-palette($warn-palette, 500),
+        $alpha: 0.3
+    )};
+
+    --color-primary-contrast: #{mat.get-color-from-palette($primary-palette, A200)};
+    --color-accent-contrast: #{mat.get-color-from-palette($accent-palette, A200)};
+
+    --color-primary-gradient: linear-gradient(110.3deg, #{mat.get-color-from-palette($primary-palette, 300)} 8.7%, #{mat.get-color-from-palette($primary-palette, 400)} 47.5%, #{mat.get-color-from-palette($primary-palette, 500)} 89.1%);
+    --color-accent-gradient: linear-gradient(110.3deg, #{mat.get-color-from-palette($accent-palette, 900)} 8.7%, #{mat.get-color-from-palette($accent-palette, 800)} 47.5%, #{mat.get-color-from-palette($accent-palette, 300)} 89.1%);
+    --color-warn-gradient: linear-gradient(110.3deg, #{mat.get-color-from-palette($warn-palette, 300)} 8.7%, #{mat.get-color-from-palette($warn-palette, 400)} 47.5%, #{mat.get-color-from-palette($warn-palette, 500)} 89.1%);
+    --color-off-white: #f3f3f3;
+
+    // Typography
+    --header-font-size: 20px;
+}
+
+// Typography
+$header-font-size: 20px;
+
+

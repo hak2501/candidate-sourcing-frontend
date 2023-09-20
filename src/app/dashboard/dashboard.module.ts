@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CoreModule } from '../core/core.module';
 import { StatsBarComponent } from './components/stats-bar/stats-bar.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [DashboardComponent, StatsBarComponent],
@@ -19,6 +20,7 @@ import { StatsBarComponent } from './components/stats-bar/stats-bar.component';
     MatIconModule,
     MatButtonModule,
     CoreModule,
+    TranslateModule.forChild(),
   ],
   exports: [DashboardComponent],
 })

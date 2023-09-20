@@ -20,14 +20,16 @@ import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { JwtRefreshInterceptor } from './core/interceptors/jwt-refresh.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error-handler.interceptor';
 import { ServicesModule } from './services/services.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { CustomerModule } from './customer/customer.module';
+import { WidgetsModule } from './widgets/widgets.module';
 
-const MODULES = [CoreModule, DashboardModule, ServicesModule];
-const MAT_MODULES = [
-  MatToolbarModule,
-  MatButtonModule,
-  MatSidenavModule,
-  MatIconModule,
-  MatListModule,
+const MODULES = [
+  CoreModule,
+  DashboardModule,
+  CustomerModule,
+  ServicesModule,
+  WidgetsModule,
 ];
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +38,7 @@ const MAT_MODULES = [
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ...MAT_MODULES,
+    TranslateModule.forRoot(),
     ...MODULES,
   ],
   providers: [

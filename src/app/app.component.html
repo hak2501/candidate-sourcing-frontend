@@ -1,3 +1,6 @@
+<!-- Tables Widgets Service Init -->
+<app-table-widgets></app-table-widgets>
+
 <!-- login container -->
 <ng-container *ngIf="authService.isLoggedOut$ | async">
   <app-spinner></app-spinner>
@@ -5,7 +8,7 @@
 </ng-container>
 
 <ng-container *ngIf="authService.isLoggedIn$ | async">
-  <app-spinner></app-spinner>
+  <!-- <app-spinner></app-spinner> -->
 
   <!-- handheld view container -->
   <ng-container *ngIf="mobileViewSerivce.isHandset$ | async; else webView">
@@ -23,7 +26,7 @@
       </mat-sidenav>
 
       <mat-sidenav-content
-        class="background-main"
+        class="background-main plr-50"
         [@onSideNavChange]="sidebarService.sidebarState$ | async"
       >
         <router-outlet></router-outlet>

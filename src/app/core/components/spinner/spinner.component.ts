@@ -8,5 +8,6 @@ import { SpinnerService } from './spinner.service';
 })
 export class SpinnerComponent {
   @Input() fullScreen: boolean = true;
+  @Input() showBackground: boolean = true;
   constructor(public spinnerService: SpinnerService) {}
 }

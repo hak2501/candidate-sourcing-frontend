@@ -9,28 +9,32 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { adminStats, stats } from 'src/app/core/models/stats';
+import { IAdminStats, IStats } from 'src/app/core/models/stats';
 import { MessageService } from 'src/app/core/services/message.service';
 import { StatsService } from 'src/app/services/dashboard/stats.service';
 import {
-  customerColor,
-  customerIcon,
-  employeeColor,
-  employeeIcon,
-  errorColor,
-  errorIcon,
-  financeColor,
-  financeIcon,
-  regularStats,
-  smallStats,
-  xSmallStats,
-} from './constants';
+  CUSTOMER_COLOR,
+  CUSTOMER_ICON,
+  EMPLOYEE_COLOR,
+  EMPLOYEE_ICON,
+  ERROR_COLOR,
+  ERROR_ICON,
+  FINANCE_COLOR,
+  FINANCE_ICON,
+} from '../../../../constants';
 import { ResponsiveViewService } from 'src/app/core/services/responsive-view.service';
+import { MOBILE_GRID, TABLET_GRID, WEB_GRID } from './repsonsive.constants';
 
+const labels = {
+  customer: ['New Customers', 'Total Customers'],
+  employee: ['New Employees', 'Total Employees'],
+  finance: ['Remaining Payments', 'Monthly Revenue'],
+  error: ['Payment Failures', 'Other Issues'],
+};
 interface statsGridData {
   rows: string;
   cols: string;
-  data: Observable<stats[]>;
+  data: Observable<IStats[]>;
   icon: string;
   color: string;
 }
@@ -45,10 +49,6 @@ export class StatsBarComponent implements OnInit {
   rowHeight = '280px';
   cols = 4;
   hideGrid: boolean = false;
-  customerStats$: Observable<stats[]>;
-  employeeStats$: Observable<stats[]>;
-  financeStats$: Observable<stats[]>;
-  errorStats$: Observable<stats[]>;
   gridData: Partial<statsGridData>[];
 
   constructor(
@@ -57,7 +57,7 @@ export class StatsBarComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     public responsiveViewService: ResponsiveViewService
   ) {
-    let stats$ = this.statsService.getDashboardStats().pipe(
+    let stats$ = this.statsService.getOrganizationalStats().pipe(
       tap((stats) => {
         if (!stats.validation.success) {
           this.messageService.showMessages(['Error fetching Stats'], 'Close');
@@ -71,31 +71,31 @@ export class StatsBarComponent implements OnInit {
       //   })
     );
 
-    this.customerStats$ = this.filterData(stats$, 'customer');
-    this.employeeStats$ = this.filterData(stats$, 'employee');
-    this.financeStats$ = this.filterData(stats$, 'finance');
-    this.errorStats$ = this.filterData(stats$, 'error');
+    const customerStats$ = this.filterData(stats$, 'customer');
+    const employeeStats$ = this.filterData(stats$, 'employee');
+    const financeStats$ = this.filterData(stats$, 'finance');
+    const errorStats$ = this.filterData(stats$, 'error');
 
     this.gridData = [
       {
-        data: this.customerStats$,
-        icon: customerIcon,
-        color: customerColor,
+        data: customerStats$,
+        icon: CUSTOMER_ICON,
+        color: CUSTOMER_COLOR,
       },
       {
-        data: this.employeeStats$,
-        icon: employeeIcon,
-        color: employeeColor,
+        data: employeeStats$,
+        icon: EMPLOYEE_ICON,
+        color: EMPLOYEE_COLOR,
       },
       {
-        data: this.financeStats$,
-        icon: financeIcon,
-        color: financeColor,
+        data: financeStats$,
+        icon: FINANCE_ICON,
+        color: FINANCE_COLOR,
       },
       {
-        data: this.errorStats$,
-        icon: errorIcon,
-        color: errorColor,
+        data: errorStats$,
+        icon: ERROR_ICON,
+        color: ERROR_COLOR,
       },
     ];
   }
@@ -110,27 +110,32 @@ export class StatsBarComponent implements OnInit {
         map(() => {
           if (this.breakpointObserver.isMatched(Breakpoints.XSmall)) {
             return this.gridData.map((data) =>
-              Object.assign(data, xSmallStats)
+              Object.assign(data, MOBILE_GRID)
             );
           } else if (this.breakpointObserver.isMatched(Breakpoints.Small)) {
-            return this.gridData.map((data) => Object.assign(data, smallStats));
+            return this.gridData.map((data) =>
+              Object.assign(data, TABLET_GRID)
+            );
           }
-          return this.gridData.map((data) => Object.assign(data, regularStats));
+          return this.gridData.map((data) => Object.assign(data, WEB_GRID));
         })
       );
   }
 
-  filterData(obs$: Observable<adminStats>, field: string): Observable<stats[]> {
+  filterData(
+    obs$: Observable<IAdminStats>,
+    field: string
+  ): Observable<IStats[]> {
     return obs$.pipe(
       map((res: any) => res[field]),
       startWith([
         {
-          statLabel: 'Current ' + field,
-          statValue: '200',
+          statLabel: (labels as any)[field][0],
+          statValue: '-',
         },
         {
-          statLabel: 'Total ' + field,
-          statValue: '375',
+          statLabel: (labels as any)[field][1],
+          statValue: '-',
         },
       ])
     );

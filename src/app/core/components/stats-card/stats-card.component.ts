@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { stats } from '../../models/stats';
+import { IStats } from '../../models/stats';
 import { Observable, finalize, of, startWith, tap } from 'rxjs';
 import { SpinnerService } from '../spinner/spinner.service';
 
@@ -11,9 +11,9 @@ import { SpinnerService } from '../spinner/spinner.service';
 })
 export class StatsCardComponent {
   @Input() icon: string = 'help';
-  @Input() stats$!: Observable<stats[]>;
+  @Input() stats$!: Observable<IStats[]>;
   @Input() color: string = 'primary';
-  statsList$: Observable<stats[]>;
+  statsList$: Observable<IStats[]>;
 
   constructor(private spinnerService: SpinnerService) {}
 

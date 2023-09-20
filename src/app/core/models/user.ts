@@ -3,3 +3,7 @@ export interface User {
   email: string;
   permissions: string[];
 }
+
+export interface UserTable extends User {
+  widgetType: string;
+}

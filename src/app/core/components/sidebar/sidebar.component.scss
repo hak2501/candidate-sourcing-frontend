@@ -1,4 +1,3 @@
-@import '../../../../variables.scss';
 .sidebar-menu {
     display: flex;
     height: 100%;
@@ -30,21 +29,21 @@
       padding: 0 10px 0 0;
       text-align: center;
       vertical-align: middle;
-      color: $accent;
+      color: var(--color-accent);
     }
   
     .label {
       margin: 0;
-      color: $accent;
+      color: var(--color-accent);
     }
   
     .active-list-item {
       background-color: white;
       .mat-icon{
-        color: $accent;
+        color: var(--color-accent);
     }
       .label{
-        color: $accent;
+        color: var(--color-accent);
         font-family: "DMSans";
       }
     }

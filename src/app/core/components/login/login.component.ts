@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { errors } from './errors';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { MessageService } from '../../services/message.service';
 import { SpinnerService } from '../spinner/spinner.service';
@@ -39,10 +39,13 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
+    private route: ActivatedRoute,
     private router: Router,
     private messageService: MessageService,
     private spinnerService: SpinnerService
-  ) {}
+  ) {
+    if (this.authService.isLoggedIn()) this.router.navigateByUrl('/dashboard');
+  }
 
   login() {
     if (this.form.valid) {
@@ -55,7 +58,9 @@ export class LoginComponent {
           if (!res.validation?.success) {
             this.messageService.showMessages(['Invalid Credentials'], 'Close');
           }
-          this.router.navigateByUrl('/dashboard');
+          const returnUrl =
+            this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+          this.router.navigateByUrl(returnUrl);
         });
     }
   }

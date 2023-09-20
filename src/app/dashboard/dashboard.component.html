@@ -1,7 +1,7 @@
 <div class="grid-container">
   <h1 class="mat-h1">Welcome {{ (authService.user$ | async)?.username }}</h1>
   <app-stats-bar></app-stats-bar>
-  <mat-grid-list cols="2" rowHeight="350px">
+  <mat-grid-list cols="3" rowHeight="350px">
     <mat-grid-tile
       #dashboardGrid
       *ngFor="let card of cards | async"
@@ -10,24 +10,31 @@
     >
       <mat-card class="dashboard-card">
         <mat-card-header>
-          <mat-card-title>
-            {{ card.title }}
-            <button
-              mat-icon-button
-              class="more-button"
-              [matMenuTriggerFor]="menu"
-              aria-label="Toggle menu"
-            >
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>Expand</button>
-              <button mat-menu-item>Remove</button>
-            </mat-menu>
+          <!-- <mat-card-title-group> -->
+          <mat-card-title class="card-title">
+            {{ card.title | translate }}
           </mat-card-title>
+          <mat-card-subtitle *ngIf="card.id == 'finance'"> </mat-card-subtitle>
+          <!-- </mat-card-title-group> -->
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <div style="height: 250px" [innerHTML]="card.content"></div>
+          <ng-container *ngIf="card.id == 'finance'">
+            <ng-container *ngIf="financeData$ | async">
+              <app-chart
+                [labels]="dateLabels"
+                [data]="financeData$"
+              ></app-chart>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="card.id == 'domain'">
+            <ng-container *ngIf="domainData$ | async">
+              <app-chart
+                [chartType]="'doughnut'"
+                [labels]="domainLabels"
+                [data]="domainData$"
+              ></app-chart>
+            </ng-container>
+          </ng-container>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

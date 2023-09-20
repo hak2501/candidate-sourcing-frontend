@@ -83,14 +83,14 @@ export function labelAnimation(
     state(
       'open',
       style({
-        display: 'inline',
+        // display: 'inline',
         opacity: 1,
       })
     ),
     state(
       'close',
       style({
-        display: 'none',
+        // display: 'none',
         opacity: 0,
       })
     ),

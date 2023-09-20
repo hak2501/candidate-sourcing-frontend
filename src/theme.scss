@@ -1,180 +1,24 @@
 
 @use '@angular/material' as mat;
 @include mat.core();
+@import './palettes.scss';
 
 
-$md-cyan-pallete: (
-    50 : #e1fff8,
-    100 : #b5ffec,
-    200 : #83ffe0,
-    300 : #51ffd4,
-    400 : #2cffca,
-    500 : #07ffc1,
-    600 : #06ffbb,
-    700 : #05ffb3,
-    800 : #04ffab,
-    900 : #02ff9e,
-    A100 : #ffffff,
-    A200 : #f2fffa,
-    A400 : #bfffe4,
-    A700 : #a6ffd9,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #000000,
-        600 : #000000,
-        700 : #000000,
-        800 : #000000,
-        900 : #000000,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
-);
+// amber variant
+// $candidate-sourcing-primary: mat.define-palette(mat.$amber-palette, A200);
+// $candidate-sourcing-accent: mat.define-palette($md-black-pallete, A200, A100, A400);
 
-$md-black-pallete: (
-    50 : #e4e4e1,
-    100 : #bdbbb5,
-    200 : #918d84,
-    300 : #645f52,
-    400 : #433d2d,
-    500 : #221b08,
-    600 : #1e1807,
-    700 : #191406,
-    800 : #141004,
-    900 : #0c0802,
-    A100 : #ffa750,
-    A200 : #ff8e1d,
-    A400 : #e97400,
-    A700 : #cf6800,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #ffffff,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #ffffff,
-    )
-);
+// eaxon
+$candidate-sourcing-primary: mat.define-palette($md-exaon-blue);
+$candidate-sourcing-accent: mat.define-palette($md-eaxon-orange);
 
-$md-brown-pallete: (
-    50 : #ece5e0,
-    100 : #cfbeb3,
-    200 : #b09380,
-    300 : #90674d,
-    400 : #784726,
-    500 : #602600,
-    600 : #582200,
-    700 : #4e1c00,
-    800 : #441700,
-    900 : #330d00,
-    A100 : #ff806b,
-    A200 : #ff5438,
-    A400 : #ff2805,
-    A700 : #eb2100,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #ffffff,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #ffffff,
-        A700 : #ffffff,
-    )
-);
-
-$md-amber-palette: (
-    50 : #f9f3e1,
-    100 : #efe0b5,
-    200 : #e4cc83,
-    300 : #d9b851,
-    400 : #d1a82c,
-    500 : #c99907,
-    600 : #c39106,
-    700 : #bc8605,
-    800 : #b57c04,
-    900 : #a96b02,
-    A100 : #ffecd3,
-    A200 : #ffd7a0,
-    A400 : #ffc16d,
-    A700 : #ffb653,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #000000,
-        600 : #000000,
-        700 : #000000,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
-);
-
-$md-blue-deep-theme:(
-    50 : #e0e1e7,
-    100 : #b3b5c2,
-    200 : #80849a,
-    300 : #4d5271,
-    400 : #262d52,
-    500 : #000834,
-    600 : #00072f,
-    700 : #000627,
-    800 : #000421,
-    900 : #000215,
-    A100 : #5555ff,
-    A200 : #2222ff,
-    A400 : #0000ee,
-    A700 : #0000d4,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #ffffff,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #ffffff,
-        A200 : #ffffff,
-        A400 : #ffffff,
-        A700 : #ffffff,
-    )
-);
-
-$candidate-sourcing-primary: mat.define-palette(mat.$amber-palette, A200);
 // $candidate-sourcing-primary: mat.define-palette($md-blue-deep-theme);
 // $candidate-sourcing-accent: mat.define-palette($md-cyan-pallete, A200, A100, A400);
 // $candidate-sourcing-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
-$candidate-sourcing-accent: mat.define-palette($md-black-pallete, A200, A100, A400);
+
 // $candidate-sourcing-accent: mat.define-palette(mat.$indigo-palette, A200, A100, A400);
-$candidate-sourcing-warn: mat.define-palette(mat.$red-palette);
+$candidate-sourcing-warn: mat.define-palette($md-eaxon-pink);
+// $candidate-sourcing-warn: mat.define-palette(mat.$red-palette);
 
 $candidate-sourcing-theme: mat.define-light-theme((
   color: (
@@ -185,3 +29,18 @@ $candidate-sourcing-theme: mat.define-light-theme((
 ));
 
 @include mat.all-component-themes($candidate-sourcing-theme);
+
+
+.dark-theme {
+    $candidate-sourcing-primary-dark: mat.define-palette(mat.$amber-palette, A200);
+    $candidate-sourcing-accent-dark: mat.define-palette($md-black-pallete, A200, A100, A400);
+    $candidate-sourcing-theme-dark: mat.define-dark-theme((
+    color: (
+        primary: $candidate-sourcing-primary-dark,
+        accent: $candidate-sourcing-accent-dark,
+        warn: $candidate-sourcing-warn,
+    )
+));
+
+@include mat.all-component-colors($candidate-sourcing-theme-dark);
+}

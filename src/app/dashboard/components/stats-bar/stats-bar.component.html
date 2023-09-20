@@ -1,7 +1,6 @@
 <ng-container *ngIf="!hideGrid">
   <mat-grid-list cols="{{ cols }}" rowHeight="{{ rowHeight }}">
     <div style="height: {{ rowHeight }}; border-radius: 25px;">
-      <app-spinner [fullScreen]="false"></app-spinner>
       <mat-grid-tile
         #statsGrid
         *ngFor="

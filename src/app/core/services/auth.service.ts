@@ -10,9 +10,9 @@ import {
 } from 'rxjs';
 import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
-import { JWT } from '../models/jwt';
+import { IJWT } from '../models/jwt';
 import { Router } from '@angular/router';
-import { baseResponse } from '../models/baseResponse';
+import { IBaseResponse } from '../models/baseResponse';
 import { MessageService } from './message.service';
 import { API_URL } from 'src/constants';
 
@@ -23,13 +23,11 @@ const AUTH_API = API_URL + '/auth/';
   providedIn: 'root',
 })
 export class AuthService {
-  private subject = new BehaviorSubject<User | null>(null);
+  private userSubject = new BehaviorSubject<User | null>(null);
   private accessSubject = new BehaviorSubject<string>('');
   private refreshSubject = new BehaviorSubject<string>('');
 
-  //   public token$: Observable<string> = this.accessSubject.asObservable();
-  //   public refreshToken$: Observable<string> = this.refreshSubject.asObservable();
-  public user$: Observable<User | null> = this.subject.asObservable();
+  public user$: Observable<User | null> = this.userSubject.asObservable();
   public isLoggedIn$: Observable<boolean>;
   public isLoggedOut$: Observable<boolean> | undefined;
 
@@ -52,9 +50,9 @@ export class AuthService {
   public login(
     email: string,
     password: string
-  ): Observable<baseResponse<JWT>> | any {
+  ): Observable<IBaseResponse<IJWT>> | any {
     return this.http
-      .post<baseResponse<JWT>>(AUTH_API + 'login', { email, password })
+      .post<IBaseResponse<IJWT>>(AUTH_API + 'login', { email, password })
       .pipe(
         tap((response) => {
           this.updateToken(response.payload);
@@ -62,12 +60,12 @@ export class AuthService {
         }),
         shareReplay(),
         catchError((err) => {
-          this.subject.next({
+          this.userSubject.next({
             username: 'First-User',
             email: 'abc@test.com',
             permissions: ['admin'],
           });
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigateByUrl('/customer');
           return throwError(() => err);
         })
       );
@@ -75,7 +73,7 @@ export class AuthService {
 
   public refresh() {
     return this.http
-      .post<baseResponse<JWT>>(AUTH_API + 'refresh', {
+      .post<IBaseResponse<IJWT>>(AUTH_API + 'refresh', {
         refreshToken: this.getRefreshToken(),
       })
       .pipe(
@@ -88,7 +86,7 @@ export class AuthService {
   }
 
   public logout() {
-    this.subject.next(null);
+    this.userSubject.next(null);
     localStorage.removeItem(AUTH_DATA);
     this.messageService.showMessages(['Session Ended'], 'Close');
     this.router.navigateByUrl('/login');
@@ -98,10 +96,10 @@ export class AuthService {
     username: string,
     email: string,
     password: string
-  ): Observable<baseResponse<Partial<User>>> {
+  ): Observable<IBaseResponse<Partial<User>>> {
     // return of(true);
     return this.http
-      .post<baseResponse<Partial<User>>>('/api/register', {
+      .post<IBaseResponse<Partial<User>>>('/api/register', {
         username,
         email,
         password,
@@ -117,11 +115,15 @@ export class AuthService {
     return this.refreshSubject.value;
   }
 
-  private updateToken(authData: JWT): User {
+  public isLoggedIn() {
+    return !!this.userSubject.getValue();
+  }
+
+  private updateToken(authData: IJWT): User {
     this.accessSubject.next(authData.accessToken);
     this.refreshSubject.next(authData.refreshToken);
     const user = this.parseJwt(authData.accessToken);
-    this.subject.next(user);
+    this.userSubject.next(user);
     return user;
   }
 

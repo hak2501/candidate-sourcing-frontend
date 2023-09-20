@@ -1,123 +1,121 @@
-import {
-  Component,
-  inject,
-  ViewChildren,
-  QueryList,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, inject, ViewChildren, QueryList } from '@angular/core';
+import { filter, map, startWith, switchMap, tap } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { StatsService } from 'src/app/services/dashboard/stats.service';
-import { adminStats, stats } from 'src/app/core/models/stats';
-import { baseResponse } from 'src/app/core/models/baseResponse';
 import { MessageService } from 'src/app/core/services/message.service';
+import { MOBILE_GRID, TABLET_GRID, WEB_GRID } from './responsive.constants';
 import { Observable } from 'rxjs';
+import { IChartData, IStats } from '../core/models/stats';
+import { DATE_LABELS } from 'src/constants';
 
+interface IYearlyStats {
+  revenue: IStats;
+  expenses: IStats;
+  profit: IStats;
+}
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements AfterViewInit {
+export class DashboardComponent {
   private breakpointObserver = inject(BreakpointObserver);
   @ViewChildren('dashboardGrid') grid!: QueryList<any>;
 
   cards: any;
   chart: any;
+  dateLabels = DATE_LABELS;
+  domainLabels: string[];
+
+  financeData$: Observable<IChartData[]>;
+  domainData$: Observable<IChartData[]>;
+  yearlyStats$: Observable<IYearlyStats>;
 
   /** Based on the screen size, switch from standard to one column per row */
   constructor(
     public authService: AuthService,
-    private sanitizer: DomSanitizer,
     public statsService: StatsService,
     public messageService: MessageService
   ) {
-    setTimeout(() => (this.cards = this.generateGrid()));
-  }
+    this.cards = this.generateGrid();
 
-  ngAfterViewInit() {
-    this.grid.changes.subscribe((t) => {
-      setTimeout(() => {
-        this.generateChart();
-      });
-    });
+    this.financeData$ = this.initFinanceData();
+    this.domainData$ = this.initDomainData();
   }
 
   private generateGrid() {
     return this.breakpointObserver
-      .observe([Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall])
+      .observe([Breakpoints.Small, Breakpoints.XSmall])
       .pipe(
-        map(({ matches }) => {
-          if (matches) {
-            return [
-              {
-                title: 'Financial Report',
-                cols: 2,
-                rows: 1,
-                content: this.sanitizeHtml(
-                  `<canvas id='myChart' class='myCanvas'></canvas>`
-                ),
-              },
-              { title: 'Card 2', cols: 2, rows: 1 },
-              { title: 'Card 3', cols: 2, rows: 1 },
-              { title: 'Card 4', cols: 2, rows: 1 },
-              { title: 'Card 5', cols: 2, rows: 1 },
-            ];
+        map(() => {
+          if (
+            this.breakpointObserver.isMatched(Breakpoints.Small) ||
+            this.breakpointObserver.isMatched(Breakpoints.XSmall)
+          ) {
+            return MOBILE_GRID;
+          } else if (this.breakpointObserver.isMatched(Breakpoints.Handset)) {
+            return TABLET_GRID;
           }
-
-          return [
-            {
-              title: 'Financial Report',
-              cols: 1,
-              rows: 1,
-              content: this.sanitizeHtml(`<canvas id='myChart'></canvas>`),
-            },
-            { title: 'Card 2', cols: 1, rows: 1 },
-            { title: 'Card 3', cols: 1, rows: 1 },
-            { title: 'Card 4', cols: 1, rows: 1 },
-            { title: 'Card 5', cols: 1, rows: 1 },
-          ];
+          return WEB_GRID;
         })
       );
   }
 
-  private generateChart() {
-    const ctx = <HTMLCanvasElement>document.getElementById('myChart');
-    if (ctx) {
-      this.chart?.destroy();
-      this.chart = new window.Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [
-            {
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: '#221b08',
-              //   borderColor: '#123456',
-              fill: true,
-              borderRadius: 25,
-              borderWidth: 2,
-              //   borderSkipped: false,
+  private initFinanceData(): Observable<IChartData[]> {
+    return this.statsService.getFinancialStats().pipe(
+      tap((res) => {
+        if (!res.validation.success) {
+          this.messageService.showMessages(
+            ['Something Unexpected Happened'],
+            'Close'
+          );
+        }
+      }),
+      filter((res) => !!res.payload),
+      map((res) => {
+        let chartData: IChartData[] = [];
+        Object.keys(res.payload).map((key: string) => {
+          let total = res.payload.revenue.reduce(
+            (total: number, curr: number) => {
+              return total + curr;
             },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        },
-      });
-    }
+            0
+          );
+          chartData.push({
+            label: key,
+            data: (res.payload as any)[key],
+          });
+        });
+        return chartData;
+      }),
+      startWith([])
+    );
   }
 
-  private sanitizeHtml(html: string) {
-    return this.sanitizer.bypassSecurityTrustHtml(html);
+  private initDomainData(): Observable<IChartData[]> {
+    return this.statsService.getEmployeeDomainStats().pipe(
+      tap((res) => {
+        if (!res.validation.success) {
+          this.messageService.showMessages(
+            ['Something Unexpected Happened'],
+            'Close'
+          );
+        }
+      }),
+      filter((res) => !!res.payload),
+      map((res) => {
+        let chartData: IChartData[] = [];
+        this.domainLabels = res.payload.domains;
+
+        chartData.push({
+          label: 'domains',
+          data: res.payload.strengths,
+        });
+
+        return chartData;
+      }),
+      startWith([])
+    );
   }
 }

@@ -1,4 +1,4 @@
-export interface JWT {
+export interface IJWT {
   accessToken: string;
   refreshToken: string;
 }
