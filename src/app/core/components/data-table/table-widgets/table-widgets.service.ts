@@ -10,7 +10,7 @@ export class TableWidgetsService {
   add(name: string, ref: TemplateRef<any>) {
     this.templates[name] = ref;
   }
-  get(name: string) {
+  get(name: string): TemplateRef<any> {
     return this.templates[name];
   }
 }

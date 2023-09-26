@@ -30,6 +30,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    console.log('widget', this.tableWidgetsService.get('buttonWidget'));
     this.userColumns = [
       {
         id: 'userId',
@@ -47,6 +48,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
       {
         id: 'actions',
         title: '',
+        widget: { template: this.tableWidgetsService.get('buttonWidget') },
       },
     ];
   }

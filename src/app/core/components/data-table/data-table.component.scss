@@ -29,3 +29,12 @@
 .table-paginator ::ng-deep .mat-mdc-paginator-icon {
     fill: var(--color-accent);
 }
+
+.table-container {
+    max-height: 70vh;
+    overflow-y: scroll;
+}
+
+:host ::ng-deep .mat-mdc-icon-button:disabled .mat-mdc-paginator-icon {
+    fill: var(--color-accent-disable);
+}

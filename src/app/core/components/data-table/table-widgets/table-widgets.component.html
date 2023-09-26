@@ -3,3 +3,15 @@
   <h1>Text Widget {{ value[ctx.col] }}</h1>
   <button (click)="ctx.myFun(value[ctx.col])">Function</button>
 </ng-template>
+
+{{ tableWidgetsService.add("buttonWidget", buttonWidget) }}
+<ng-template #buttonWidget let-value let-ctx="context">
+  <button
+    mat-button
+    color="accent"
+    class="table-widget-button-background"
+    (click)="ctx.myFun(value[ctx.col])"
+  >
+    Function
+  </button>
+</ng-template>

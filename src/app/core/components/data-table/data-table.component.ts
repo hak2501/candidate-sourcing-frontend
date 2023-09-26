@@ -8,6 +8,7 @@ export interface IDataTableColumns {
   id: string;
   title: string;
   widget?: ITableWidget;
+  visible?: boolean;
 }
 export interface ITableWidget {
   template: TemplateRef<any>;
@@ -45,11 +46,11 @@ export class DataTableComponent<T> {
   }
 
   ngOnChanges() {
-    if (!this.displayedColumns) {
-      this.displayedColumns = this.columns.map((item) => {
+    this.displayedColumns = this.columns
+      .filter((item) => item.visible != false)
+      .map((item) => {
         return item.id;
       });
-    }
 
     this.widgets = this.columns.map((item) =>
       !!item.widget ? item.widget.template : null

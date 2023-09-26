@@ -71,6 +71,8 @@ warn-gradient: linear-gradient(110.3deg, mat.get-color-from-palette($warn-palett
     --color-accent: #{mat.get-color-from-palette($accent-palette, 500)};
     --color-warning: #{mat.get-color-from-palette($warn-palette, 500)};
 
+    --color-accent-disable: #{mat.get-color-from-palette($accent-palette, 500)}73;
+
     --color-primary-transparent: #{color.change(
         mat.get-color-from-palette($primary-palette, 500),
         $alpha: 0.3)};
