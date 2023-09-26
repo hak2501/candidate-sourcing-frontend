@@ -11,10 +11,14 @@
 @media (min-width: 599px){
     .navbar-container-height{
         height: calc(100% - var(--mat-toolbar-standard-height));
-    }
-    
+    } 
 }
 
 .mat-drawer-container{
     background-color: --color-off-white !important;
+}
+
+.mobile-nav {
+    position: fixed; 
+    bottom: 0;
 }

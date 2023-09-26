@@ -1,0 +1,31 @@
+:host {
+    margin-top: 10px;
+}
+
+:host .table-search ::ng-deep .mat-mdc-form-field-has-icon-prefix .mat-mdc-text-field-wrapper{
+    background: white;
+}
+
+.table-search {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.table-row {
+    background-color: var(--color-primary);
+    color: var(--color-accent);
+}
+
+.table-paginator {
+    background: var(--color-primary);
+    color: var(--color-accent);
+}
+
+.table-paginator ::ng-deep .mat-mdc-text-field-wrapper {
+    background: var(--color-accent);
+    border-radius: 5px;
+}
+
+.table-paginator ::ng-deep .mat-mdc-paginator-icon {
+    fill: var(--color-accent);
+}

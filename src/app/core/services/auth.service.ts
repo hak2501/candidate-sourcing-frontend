@@ -65,7 +65,7 @@ export class AuthService {
             email: 'abc@test.com',
             permissions: ['admin'],
           });
-          this.router.navigateByUrl('/customer');
+          this.router.navigateByUrl('/dashboard');
           return throwError(() => err);
         })
       );

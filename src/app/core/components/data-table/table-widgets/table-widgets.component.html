@@ -1,5 +1,5 @@
 {{ tableWidgetsService.add("textWidget", textWidget) }}
 <ng-template #textWidget let-value let-ctx="context">
-  <h1>Text Widget {{ value }}</h1>
-  <button (click)="ctx.myFun(value)">Function</button>
+  <h1>Text Widget {{ value[ctx.col] }}</h1>
+  <button (click)="ctx.myFun(value[ctx.col])">Function</button>
 </ng-template>

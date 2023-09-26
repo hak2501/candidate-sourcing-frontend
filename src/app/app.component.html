@@ -13,8 +13,8 @@
   <!-- handheld view container -->
   <ng-container *ngIf="mobileViewSerivce.isHandset$ | async; else webView">
     <router-outlet></router-outlet>
-    <div style="height: 100px"></div>
-    <app-navbar-mobile style="position: fixed; bottom: 0"></app-navbar-mobile>
+    <div style="height: 200px"></div>
+    <app-navbar-mobile class="mobile-nav"></app-navbar-mobile>
   </ng-container>
 
   <!-- web view container -->
